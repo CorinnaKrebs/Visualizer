@@ -1,8 +1,8 @@
-# Visualiser
+# Visualizer
 This tool visualizes solutions for the Vehicle Routing Problem combined with the 3D Container Loading Problem.
 
 ## CI Status
-[![Java CI with Maven](https://github.com/CorinnaKrebs/Visualiser/actions/workflows/maven.yml/badge.svg)](https://github.com/CorinnaKrebs/Visualiser/actions/workflows/maven.yml)
+[![Java CI with Maven](https://github.com/CorinnaKrebs/Visualizer/actions/workflows/maven.yml/badge.svg)](https://github.com/CorinnaKrebs/Visualizer/actions/workflows/maven.yml)
 
 ## License
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -25,7 +25,7 @@ Moreover, the tool checks the feasibility of the solutions and indicates violate
 ## Requirements
 * min. Java 11
 * Software: Java JRE, JavaFX, [Apache Maven Version 2.0](https://maven.apache.org/), IDE (e.g. [IntelliJ](https://www.jetbrains.com/de-de/idea/) or [Eclipse](https://www.eclipse.org/downloads/)), Lombok
-* Build files: [pom.xml](https://github.com/CorinnaKrebs/Visualiser/blob/master/pom.xml)
+* Build files: [pom.xml](https://github.com/CorinnaKrebs/Visualizer/blob/master/pom.xml)
 
 ## Data
 * Please check [Soludion Validator](https://github.com/CorinnaKrebs/SolutionValidator) for necessary input files
@@ -38,7 +38,7 @@ _Coming soon_
 ![Start](images/Start.png)
 
 2) Click in the menu -> open.
-   Then Drag&Drop or select the instance and the solution file (see [files](https://github.com/CorinnaKrebs/Visualiser/blob/master/example))
+   Then Drag&Drop or select the instance and the solution file (see [files](https://github.com/CorinnaKrebs/Visualizer/blob/master/example))
    Then, press on "Start!"
    
 ![FileOpen](images/FileOpen.png)
