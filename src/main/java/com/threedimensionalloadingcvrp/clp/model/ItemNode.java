@@ -95,7 +95,7 @@ public class ItemNode extends Box {
         this.error = new SimpleStringProperty("");
 
         this.sequenceIndex = new SimpleIntegerProperty(indexId);
-        this.setDepthTest(DepthTest.DISABLE);
+        this.setDepthTest(DepthTest.ENABLE);
 
         setDepth(length.getValue());
         setWidth(width.getValue());
@@ -133,9 +133,7 @@ public class ItemNode extends Box {
      */
     public void setMaterial() {
         // Create and set Material
-        PhongMaterial material = new PhongMaterial();
-        material.setDiffuseColor(color.getValue());
-        material.setSpecularColor(color.getValue());
+        PhongMaterial material = new PhongMaterial(color.getValue());
         this.setMaterial(material);
     }
 

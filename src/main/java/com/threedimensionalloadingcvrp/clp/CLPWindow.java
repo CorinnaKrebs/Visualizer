@@ -4,10 +4,7 @@ import com.threedimensionalloadingcvrp.App;
 import com.threedimensionalloadingcvrp.Presenter;
 import com.threedimensionalloadingcvrp.support.SavePresenter;
 import javafx.geometry.Pos;
-import javafx.scene.DepthTest;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
-import javafx.scene.SubScene;
+import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -47,8 +44,12 @@ public class CLPWindow extends Stage {
         content = new BorderPane();
 
         // The 3D View must be a SubScene
-        subScene = new SubScene(vehicle3D, App.WIN_WIDTH * 0.9, App.WIN_HEIGHT / 2.0);
-        subScene.setCamera(new PerspectiveCamera());
+        subScene = new SubScene(vehicle3D, App.WIN_WIDTH * 0.9, App.WIN_HEIGHT / 2.0, true,
+                SceneAntialiasing.BALANCED);
+        PerspectiveCamera camera = new PerspectiveCamera();
+        camera.setNearClip(0.00001);
+        camera.setFarClip(10000.0);
+        subScene.setCamera(camera);
         subScene.setDepthTest(DepthTest.ENABLE);
 
         // Layout
@@ -73,7 +74,7 @@ public class CLPWindow extends Stage {
 
         // Start Scene
         setTitle("CLP View");
-        Scene scene = new Scene(content, App.WIN_WIDTH, App.WIN_HEIGHT, true);
+        Scene scene = new Scene(content, App.WIN_WIDTH, App.WIN_HEIGHT, true, SceneAntialiasing.BALANCED);
         this.setScene(scene);
     }
 }

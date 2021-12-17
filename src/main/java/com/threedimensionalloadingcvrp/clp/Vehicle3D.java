@@ -1,6 +1,7 @@
 package com.threedimensionalloadingcvrp.clp;
 
 import com.threedimensionalloadingcvrp.App;
+import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.DrawMode;
@@ -48,6 +49,7 @@ public class Vehicle3D extends Group {
         getTransforms().addAll(rx, rz, ry, scale);
 
         box = new Box();
+        box.setDepthTest(DepthTest.ENABLE);
         box.setTranslateZ(length * 0.5); // x
         box.setTranslateX(-width * 0.5); // y
         box.setTranslateY(-height * 0.5); // z
