@@ -78,8 +78,8 @@ public class ItemNode extends Box {
         this.itemId = new SimpleIntegerProperty(item.getId());
         this.typeId = new SimpleIntegerProperty(item.getType_id());
         this.customerId = new SimpleIntegerProperty(item.getCustomer_id());
-        this.length = new SimpleIntegerProperty(!item.isRotated() ? item.getL() : item.getW());
-        this.width  = new SimpleIntegerProperty(!item.isRotated() ? item.getW() : item.getL());
+        this.length = new SimpleIntegerProperty(item.getMax().getX() - item.getMin().getX());
+        this.width  = new SimpleIntegerProperty(item.getMax().getY() - item.getMin().getY());
         this.height = new SimpleIntegerProperty(item.getH());
         this.mass = new SimpleDoubleProperty(round(item.getMass(), 2));
         this.fragile = new SimpleBooleanProperty(item.isFragile());

@@ -15,8 +15,11 @@ public class FileOpenView extends VBox {
     /** The Pane to insert the Data Files */
     private final DataPane dataPane;
 
-    /** The Pane to define the Constraint Set */
-    private final ConstraintPane constraintsPane;
+    /** The Pane to define the Routing Constraint Set */
+    private final RoutingConstraintPane routingPane;
+
+    /** The Pane to define the Loading Constraint Set */
+    private final LoadingConstraintPane loadingPane;
 
     /** The Start Button */
     private final Button button;
@@ -37,11 +40,12 @@ public class FileOpenView extends VBox {
         dataPresenter.init();
 
         // Create Constraint Pane
-        constraintsPane = new ConstraintPane();
-        ConstraintPresenter constraintPresenter = new ConstraintPresenter(constraintsPane, button);
+        routingPane = new RoutingConstraintPane();
+        loadingPane = new LoadingConstraintPane();
+        ConstraintPresenter constraintPresenter = new ConstraintPresenter(routingPane, loadingPane, button);
         constraintPresenter.init();
 
-        getChildren().addAll(dataPane, constraintsPane, button);
+        getChildren().addAll(dataPane, routingPane, loadingPane, button);
 
         setPadding(new Insets(10, 10, 10, 10));
     }

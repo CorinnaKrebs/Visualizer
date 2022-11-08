@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ConstraintPane extends TitledPane {
+public class LoadingConstraintPane extends TitledPane {
 
     /** Label for Alpha Parameter */
     private final Label labelAlpha;
@@ -61,7 +61,7 @@ public class ConstraintPane extends TitledPane {
     /**
      * Instantiates a new Constraint pane.
      */
-    public ConstraintPane() {
+    public LoadingConstraintPane() {
         super();
         // TitledPane -> ScrollPane -> GridPane
         GridPane gridPane = new GridPane();

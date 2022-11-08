@@ -14,7 +14,10 @@ import javafx.scene.control.Button;
 public class ConstraintPresenter extends Presenter {
 
     /** The view to control */
-    private final ConstraintPane view;
+    private final LoadingConstraintPane loadingPane;
+
+    /** The view to control */
+    private final RoutingConstraintPane routingPane;
 
     /** The Start Button */
     private final Button button;
@@ -22,11 +25,13 @@ public class ConstraintPresenter extends Presenter {
     /**
      * Instantiates a new Constraint presenter.
      *
-     * @param view   the Constraint Pane
+     * @param loadingPane   the Constraint Pane
      * @param button the Start button
      */
-    public ConstraintPresenter(final ConstraintPane view, final Button button) {
-        this.view = view;
+    public ConstraintPresenter(final RoutingConstraintPane routingPane, final LoadingConstraintPane loadingPane,
+                               final Button button) {
+        this.routingPane = routingPane;
+        this.loadingPane = loadingPane;
         this.button = button;
     }
 
@@ -35,35 +40,39 @@ public class ConstraintPresenter extends Presenter {
      */
     public void init() {
 
+        // Set Loading Constraint Set
+        routingPane.getCheckSD().setSelected(false);
+        routingPane.getCheckTW().setSelected(false);
+
         // Set Basic Constraint Set
-        view.getCheckRotation().setSelected(true);
-        view.getCheckCapacity().setSelected(true);
-        view.getCheckReachability().setSelected(false);
-        view.getCheckAxleWeights().setSelected(false);
-        view.getCheckBalancing().setSelected(false);
+        loadingPane.getCheckRotation().setSelected(true);
+        loadingPane.getCheckCapacity().setSelected(true);
+        loadingPane.getCheckReachability().setSelected(false);
+        loadingPane.getCheckAxleWeights().setSelected(false);
+        loadingPane.getCheckBalancing().setSelected(false);
 
         // Set Standard Parameters
-        view.getTextAlpha().setText("0.75");
-        view.getTextLambda().setText("5");
-        view.getTextBalancedPart().setText("0.7");
-        view.getChoiceUSequence().setValue(UnloadingSequence.LIFO);
-        view.getChoiceVStability().setValue(VerticalStability.MinimalSupport);
-        view.getChoiceStacking().setValue(Stacking.Fragility);
+        loadingPane.getTextAlpha().setText("0.75");
+        loadingPane.getTextLambda().setText("5");
+        loadingPane.getTextBalancedPart().setText("0.7");
+        loadingPane.getChoiceUSequence().setValue(UnloadingSequence.LIFO);
+        loadingPane.getChoiceVStability().setValue(VerticalStability.MinimalSupport);
+        loadingPane.getChoiceStacking().setValue(Stacking.Fragility);
 
         // Hide parameter alpha if no Vertical Stability
-        view.getChoiceVStability().setOnAction(event -> {
-            boolean visibility = view.getChoiceVStability().getValue() != VerticalStability.none;
-            view.getLabelAlpha().setVisible(visibility);
-            view.getTextAlpha().setVisible(visibility);
+        loadingPane.getChoiceVStability().setOnAction(event -> {
+            boolean visibility = loadingPane.getChoiceVStability().getValue() != VerticalStability.none;
+            loadingPane.getLabelAlpha().setVisible(visibility);
+            loadingPane.getTextAlpha().setVisible(visibility);
         });
 
         // Show Lambda Parameter if Reachability is activated
-        view.getLabelLambda().visibleProperty().bind(view.getCheckReachability().selectedProperty());
-        view.getTextLambda().visibleProperty().bind(view.getCheckReachability().selectedProperty());
+        loadingPane.getLabelLambda().visibleProperty().bind(loadingPane.getCheckReachability().selectedProperty());
+        loadingPane.getTextLambda().visibleProperty().bind(loadingPane.getCheckReachability().selectedProperty());
 
         // Show Balanced part parameter if Balanced Load is activated
-        view.getLabelBalancedPart().visibleProperty().bind(view.getCheckBalancing().selectedProperty());
-        view.getTextBalancedPart().visibleProperty().bind(view.getCheckBalancing().selectedProperty());
+        loadingPane.getLabelBalancedPart().visibleProperty().bind(loadingPane.getCheckBalancing().selectedProperty());
+        loadingPane.getTextBalancedPart().visibleProperty().bind(loadingPane.getCheckBalancing().selectedProperty());
 
         // Add Click Action for Button
         button.addEventHandler(ActionEvent.ACTION, event -> getConstraintSet());
@@ -74,23 +83,26 @@ public class ConstraintPresenter extends Presenter {
      */
     public void getConstraintSet() {
         // Read the Data
-        boolean rotation = view.getCheckRotation().isSelected();
-        boolean capacity = view.getCheckCapacity().isSelected();
-        boolean reachability = view.getCheckReachability().isSelected();
-        boolean axleWeights  = view.getCheckAxleWeights().isSelected();
-        boolean balancing    = view.getCheckBalancing().isSelected();
-        VerticalStability verticalStability = view.getChoiceVStability().getValue();
-        UnloadingSequence unloadingSequence = view.getChoiceUSequence().getValue();
-        Stacking stacking = view.getChoiceStacking().getValue();
+        boolean timeWindows     = routingPane.getCheckTW().isSelected();
+        boolean splitDelivery   = routingPane.getCheckSD().isSelected();
 
-        float alpha = Float.parseFloat(view.getTextAlpha().getText());
-        int   lambda = Integer.parseInt(view.getTextLambda().getText());
-        float balancedPart = Float.parseFloat(view.getTextBalancedPart().getText());
+        boolean rotation        = loadingPane.getCheckRotation().isSelected();
+        boolean capacity        = loadingPane.getCheckCapacity().isSelected();
+        boolean reachability    = loadingPane.getCheckReachability().isSelected();
+        boolean axleWeights     = loadingPane.getCheckAxleWeights().isSelected();
+        boolean balancing       = loadingPane.getCheckBalancing().isSelected();
+        VerticalStability verticalStability = loadingPane.getChoiceVStability().getValue();
+        UnloadingSequence unloadingSequence = loadingPane.getChoiceUSequence().getValue();
+        Stacking stacking = loadingPane.getChoiceStacking().getValue();
+
+        float alpha = Float.parseFloat(loadingPane.getTextAlpha().getText());
+        int   lambda = Integer.parseInt(loadingPane.getTextLambda().getText());
+        float balancedPart = Float.parseFloat(loadingPane.getTextBalancedPart().getText());
 
         // Create new Constraint Set
         ConstraintSet constraintSet = new ConstraintSet(rotation, capacity, unloadingSequence,
                 verticalStability, stacking, reachability, axleWeights, balancing,
-                alpha, lambda, balancedPart);
+                alpha, lambda, balancedPart, timeWindows, splitDelivery);
 
         // Save the Constraint Set
         model.setConstraintSet(constraintSet);

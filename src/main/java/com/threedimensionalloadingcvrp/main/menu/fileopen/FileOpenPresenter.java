@@ -45,8 +45,10 @@ public class FileOpenPresenter extends Presenter {
      */
     public void init() {
         view.getButton().setOnAction(this::actionStart);
+        view.getDataPane().getCheckRoutingConstraints().selectedProperty().addListener((observableValue, oldValue, newValue)
+                -> view.getRoutingPane().setVisible(newValue));
         view.getDataPane().getCheckLoadingConstraints().selectedProperty().addListener((observableValue, oldValue, newValue)
-                -> view.getConstraintsPane().setVisible(newValue));
+                -> view.getLoadingPane().setVisible(newValue));
     }
 
     /**
@@ -98,7 +100,7 @@ public class FileOpenPresenter extends Presenter {
                 Instance instance = model.getInstance();
                 final boolean msg = false;
 
-                if (!checkTimeWindows(solution, instance, msg)) {
+                if (!checkTimeWindows(solution, instance, model.getConstraintSet().isTimeWindows(), msg)) {
                     builder.append("TimeWindows exceeded");
                 }
 
@@ -106,7 +108,7 @@ public class FileOpenPresenter extends Presenter {
                     builder.append("Capacities exceeded");
                 }
 
-                if (!checkDispatchedCustomers(solution, instance, msg)) {
+                if (!checkDispatchedCustomers(solution, model.getConstraintSet().isSplit(), instance, msg)) {
                     builder.append("Not all Customers are dispatched");
                 }
 
